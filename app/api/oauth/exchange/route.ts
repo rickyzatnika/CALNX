@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   const code = url.searchParams.get("code");
 
   if (!code) {
-    return Response.json("Hey we did not get the code", { status: 400 })
+    return Response.json({ message: "Hey we did not get the code" }, { status: 400 })
   }
 
   try {

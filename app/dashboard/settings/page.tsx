@@ -29,8 +29,8 @@ export default async function SettingsPage() {
   const data = await getData(session.user?.id as string)
 
   return (
-    <div>
-      <SettingForm email={data.email} fullName={data.name as string} profileImage={data.image as string} />
-    </div>
+
+    <SettingForm email={data.email} fullName={data.name as string} profileImage={data.image as string} />
+
   )
 }
