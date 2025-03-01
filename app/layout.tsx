@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/Providers";
-
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "./api/uploadthing/core";
 
 
 const poppinsSans = Poppins({
@@ -30,6 +32,10 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="light">
+          <NextSSRPlugin
+
+            routerConfig={extractRouterConfig(ourFileRouter)}
+          />
           {children}
         </ThemeProvider>
       </body>
