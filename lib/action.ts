@@ -147,10 +147,47 @@ export async function SettingsAction(prevState: any, formData: FormData) {
 // }
 
 
-export async function updateAvailability(formData: FormData) {
+// export async function updateAvailability(formData: FormData) {
 
+//   const rawData = Object.fromEntries(formData.entries());
+
+//   const availabilityData = Object.keys(rawData)
+//     .filter((key) => key.startsWith("id-"))
+//     .map((key) => {
+//       const id = key.replace("id-", "");
+//       return {
+//         id,
+//         isActive: rawData[`isActive-${id}`] === "on",
+//         fromTime: rawData[`fromTime-${id}`]?.toString() || null,
+//         tillTime: rawData[`tillTime-${id}`]?.toString() || null,
+//       };
+//     })
+//     .filter((item) => item.fromTime && item.tillTime); // Pastikan tidak ada null values
+//   try {
+//     await prisma.$transaction(
+//       availabilityData.map((item) => prisma.availability.update({
+//         where: {
+//           id: item.id
+//         },
+//         data: {
+//           isActive: item.isActive,
+//           fromTime: item.fromTime!,
+//           tillTime: item.tillTime!,
+//         }
+//       }))
+//     );
+//     return revalidatePath('/dashboard/availability')
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+
+export async function updateAvailability(formData: FormData): Promise<void> {
+  // Konversi FormData ke object
   const rawData = Object.fromEntries(formData.entries());
 
+  // Parsing data dari form
   const availabilityData = Object.keys(rawData)
     .filter((key) => key.startsWith("id-"))
     .map((key) => {
@@ -158,26 +195,47 @@ export async function updateAvailability(formData: FormData) {
       return {
         id,
         isActive: rawData[`isActive-${id}`] === "on",
-        fromTime: rawData[`fromTime-${id}`]?.toString() || null,
-        tillTime: rawData[`tillTime-${id}`]?.toString() || null,
+        fromTime: rawData[`fromTime-${id}`] as string,
+        tillTime: rawData[`tillTime-${id}`] as string,
       };
-    })
-    .filter((item) => item.fromTime && item.tillTime); // Pastikan tidak ada null values
+    });
+
   try {
-    await prisma.$transaction(
-      availabilityData.map((item) => prisma.availability.update({
-        where: {
-          id: item.id
-        },
+    // Ambil semua data lama terlebih dahulu dalam satu query
+    const existingData = await prisma.availability.findMany({
+      where: {
+        id: { in: availabilityData.map((item) => item.id) }
+      },
+      select: { id: true, isActive: true, fromTime: true, tillTime: true },
+    });
+
+    // Filter hanya data yang berubah
+    const updates = availabilityData
+      .filter((item) => {
+        const existing = existingData.find((e) => e.id === item.id);
+        return (
+          !existing ||
+          existing.isActive !== item.isActive ||
+          existing.fromTime !== item.fromTime ||
+          existing.tillTime !== item.tillTime
+        );
+      })
+      .map((item) => prisma.availability.update({
+        where: { id: item.id },
         data: {
           isActive: item.isActive,
-          fromTime: item.fromTime!,
-          tillTime: item.tillTime!,
+          fromTime: item.fromTime,
+          tillTime: item.tillTime
         }
-      }))
-    );
-    return revalidatePath('/dashboard/availability')
+      }));
+
+    // Jalankan transaksi jika ada perubahan
+    if (updates.length > 0) {
+      await prisma.$transaction(updates);
+    }
+    revalidatePath('/dashboard/availability')
+
   } catch (error) {
-    console.log(error);
+    console.error("Error updating availability:", error);
   }
 }
