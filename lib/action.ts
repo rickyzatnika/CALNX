@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 
 import { requireUser } from "./hooks"
 import { parseWithZod } from '@conform-to/zod'
-import { onboardingSchemaValidation, settingsSchema } from "./zodSchemas"
+import { eventTypeSchema, onboardingSchemaValidation, settingsSchema } from "./zodSchemas"
 import { redirect } from "next/navigation"
 import prisma from "./db"
 import { revalidatePath } from "next/cache"
@@ -239,5 +240,71 @@ export async function updateAvailability(formData: FormData): Promise<void> {
 
   } catch (error) {
     console.error("Error updating availability:", error);
+  }
+}
+
+
+
+export async function CreateEventType(prevState: any, formData: FormData) {
+  const session = await requireUser();
+
+  const submission = parseWithZod(formData, {
+    schema: eventTypeSchema,
+  })
+
+  if (submission.status !== "success") {
+    return submission.reply();
+  }
+
+  await prisma.eventType.create({
+    data: {
+      title: submission.value.title,
+      description: submission.value.description,
+      duration: submission.value.duration,
+      url: submission.value.url,
+      videoCallSoftware: submission.value.videoCallSoftware,
+      userId: session.user?.id
+    },
+  });
+
+  return redirect('/dashboard');
+
+}
+
+
+
+export async function UpdateEventTypeStatusAction(
+  prevState: any,
+  {
+    eventTypeId,
+    isChecked,
+  }: {
+    eventTypeId: string;
+    isChecked: boolean;
+  }
+) {
+  try {
+    const session = await requireUser();
+
+    const data = await prisma.eventType.update({
+      where: {
+        id: eventTypeId,
+        userId: session.user?.id as string,
+      },
+      data: {
+        active: isChecked,
+      },
+    });
+
+    revalidatePath(`/dashboard`);
+    return {
+      status: "success",
+      message: "EventType Status updated successfully",
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      message: "Something went wrong",
+    };
   }
 }

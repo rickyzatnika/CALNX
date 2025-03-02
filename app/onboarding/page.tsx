@@ -50,7 +50,7 @@ export default function OnboardingRoute() {
             <div className="grid gap-y-2  w-full">
               <label>Username</label>
               <div className="flex rounded-md">
-                <span className="inline-flex items-center px-3 rounded-l-md border-r-0 bg-accent text-sm text-muted-foreground">calnx.com/</span>
+                <span className="inline-flex items-center px-3 rounded-l-md border-r-0 bg-accent text-sm text-muted-foreground">calnx.vercel.app/</span>
                 <Input
                   name={fields.userName.name}
                   defaultValue={fields.userName.initialValue}

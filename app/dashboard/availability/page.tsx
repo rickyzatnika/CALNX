@@ -25,7 +25,6 @@ async function getData(userId: string) {
 export default async function AvailabilityPage() {
 
   const session = await requireUser();
-
   const data = await getData(session.user?.id as string);
   const dayOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -46,7 +45,6 @@ export default async function AvailabilityPage() {
                   <Switch name={`isActive-${item.id}`} defaultChecked={item.isActive} className="cursor-pointer" />
                   <p>{item.day}</p>
                 </div>
-
                 {/* ------FROM TIME SELECT------- */}
                 <Select name={`fromTime-${item.id}`} defaultValue={item.fromTime}>
                   <SelectTrigger className="w-full">
@@ -62,7 +60,6 @@ export default async function AvailabilityPage() {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-
                 {/* ------TILL TIME SELECT------- */}
                 <Select name={`tillTime-${item.id}`} defaultValue={item.tillTime}>
                   <SelectTrigger className="w-full">

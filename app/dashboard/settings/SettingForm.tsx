@@ -4,12 +4,12 @@
 import { SubmitButton } from "@/app/components/SubmitButton"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { SettingsAction } from "@/lib/action"
 import { UploadDropzone } from "@/lib/uploadthing"
 import { settingsSchema } from "@/lib/zodSchemas"
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod"
-import { Label } from "@radix-ui/react-dropdown-menu"
 import { X } from "lucide-react"
 import Image from "next/image"
 import { useActionState, useState } from "react"
