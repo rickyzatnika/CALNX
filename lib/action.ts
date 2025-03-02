@@ -96,7 +96,6 @@ export async function SettingsAction(prevState: any, formData: FormData) {
   if (submission.status !== "success") {
     return submission.reply();
   }
-
   await prisma.user.update({
     where: {
       id: session.user?.id
@@ -113,19 +112,12 @@ export async function SettingsAction(prevState: any, formData: FormData) {
 
 export async function updateAvailability(formData: FormData) {
 
-  const session = await requireUser();
-
-  if (!session) {
-    return
-  }
-
   const rawData = Object.fromEntries(formData.entries());
 
   const availabilityData = Object.keys(rawData)
     .filter((key) => key.startsWith("id-"))
     .map((key) => {
       const id = key.replace("id-", "");
-
       return {
         id,
         isActive: rawData[`isActive-${id}`] === "on",
@@ -133,7 +125,6 @@ export async function updateAvailability(formData: FormData) {
         tillTime: rawData[`tillTime-${id}`] as string,
       };
     });
-
   try {
     await prisma.$transaction(
       availabilityData.map((item) => prisma.availability.update({
@@ -147,10 +138,8 @@ export async function updateAvailability(formData: FormData) {
         }
       }))
     );
-
     revalidatePath('/dashboard/availability')
-
   } catch (error) {
-    console.log("something went wrong bro!", error);
+    console.log(error);
   }
 }

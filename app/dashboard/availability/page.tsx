@@ -3,10 +3,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { updateAvailability } from "@/lib/action";
-import prisma from "@/lib/db";
 import { requireUser } from "@/lib/hooks";
 import { times } from "@/lib/time";
 import { notFound } from "next/navigation";
+import prisma from "@/lib/db";
 
 
 async function getData(userId: string) {
@@ -24,11 +24,9 @@ async function getData(userId: string) {
 
 export default async function AvailabilityPage() {
 
-  const session = await requireUser()
+  const session = await requireUser();
 
   const data = await getData(session.user?.id as string);
-
-
 
 
   return (
