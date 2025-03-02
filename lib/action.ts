@@ -47,9 +47,8 @@ export async function SettingsAction(prevState: any, formData: FormData) {
 
   const session = await requireUser()
 
-  const submission = await parseWithZod(formData, {
+  const submission = parseWithZod(formData, {
     schema: settingsSchema,
-    async: true
   });
 
   if (submission.status !== "success") {
