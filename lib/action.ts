@@ -297,14 +297,8 @@ export async function UpdateEventTypeStatusAction(
     });
 
     revalidatePath(`/dashboard`);
-    return {
-      status: "success",
-      message: "EventType Status updated successfully",
-    };
+
   } catch (error) {
-    return {
-      status: "error",
-      message: "Something went wrong",
-    };
+    console.error("Error creating event:", error);
   }
 }
