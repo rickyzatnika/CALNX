@@ -37,11 +37,9 @@ export async function OnboardingAction(prevState: any, formData: FormData) {
     data: {
       userName: submission.value.userName,
       name: submission.value.fullName,
-    }
-  })
-
-  return redirect('/onboarding/grant-id')
-
+    },
+  });
+  return redirect('/onboarding/grant-id');
 }
 
 
@@ -64,7 +62,7 @@ export async function SettingsAction(prevState: any, formData: FormData) {
     data: {
       name: submission.value.fullName,
       image: submission.value.profileImage,
-    }
-  })
-  return redirect('/dashboard')
+    },
+  });
+  return redirect('/dashboard');
 }
