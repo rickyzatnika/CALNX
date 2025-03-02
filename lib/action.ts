@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server"
 
-import { prisma } from "./db"
 import { requireUser } from "./hooks"
 import { parseWithZod } from '@conform-to/zod'
 import { onboardingSchemaValidation, settingsSchema } from "./zodSchemas"
 import { redirect } from "next/navigation"
+import prisma from "./db"
 
 
 export async function OnboardingAction(prevState: any, formData: FormData) {

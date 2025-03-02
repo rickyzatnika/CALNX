@@ -12,9 +12,10 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/auth";
 import { requireUser } from "@/lib/hooks";
-import { prisma } from "@/lib/db";
+
 import { redirect } from "next/navigation";
 import { Toaster } from "@/components/ui/sonner";
+import prisma from "@/lib/db";
 
 
 

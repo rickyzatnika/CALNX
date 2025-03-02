@@ -1,7 +1,8 @@
-import { prisma } from "@/lib/db";
+
 import { SettingForm } from "./SettingForm";
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/hooks";
+import prisma from "@/lib/db";
 
 
 async function getData(id: string) {
