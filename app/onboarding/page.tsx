@@ -33,7 +33,7 @@ export default function OnboardingRoute() {
     <div className="h-screen w-screen flex items-center justify-center">
       <Card className="border border-accent">
         <CardHeader>
-          <CardTitle>Welcome to CAL<span className="text-indigo-500">NX</span></CardTitle>
+          <CardTitle>Welcome to CAL</CardTitle>
           <CardDescription>We need the following information to set up your profile</CardDescription>
         </CardHeader>
         <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate className="flex flex-col gap-y-5" >

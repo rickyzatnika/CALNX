@@ -239,7 +239,11 @@ export async function updateAvailability(formData: FormData): Promise<void> {
     return revalidatePath('/dashboard/availability');
 
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) {
+      console.log(error.message);
+    } else {
+      console.log(String(error));
+    }
   }
 }
 
@@ -303,7 +307,11 @@ export async function UpdateEventTypeStatusAction(
     };
 
   } catch (error) {
-    console.error(error);
+    if (error instanceof Error) {
+      console.log(error.message);
+    } else {
+      console.log(String(error));
+    }
     return {
       status: "error",
       message: "Something went wrong",

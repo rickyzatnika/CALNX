@@ -16,6 +16,7 @@ import { Toaster } from "@/components/ui/sonner";
 import prisma from "@/lib/db";
 import { requireUser } from "@/lib/hooks";
 import { PathnameDisplay } from "../components/PathnameDisplay";
+import LogoDisplay from "../components/LogoDisplay";
 
 
 
@@ -55,7 +56,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
           <div className="flex h-full max-h-screen flex-col gap-2 ">
             <div className="flex h-14 items-center justify-between border-b border-accent px-4  lg:h-[60px] lg:px-6">
               <Link href="/">
-                <Image src="/logo2.png" alt="logo" width={50} height={50} priority={true} className="cursor-pointer w-auto h-auto" />
+                <LogoDisplay />
               </Link>
             </div>
             <div className="flex-1 relative">
