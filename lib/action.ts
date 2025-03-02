@@ -233,7 +233,7 @@ export async function updateAvailability(formData: FormData): Promise<void> {
     if (updates.length > 0) {
       await prisma.$transaction(updates);
     }
-    revalidatePath('/dashboard/availability')
+    return revalidatePath('/dashboard/availability')
 
   } catch (error) {
     console.error("Error updating availability:", error);
