@@ -28,7 +28,7 @@ export function DashboardLinks() {
   return (
     <div className="space-y-3 mt-3">
       {dashboardLinks.map((link) => (
-        <Link key={link.id} href={link.href} className={cn(
+        <Link passHref={true} key={link.id} href={link.href} className={cn(
           pathname === link.href ? 'bg-primary text-accent' : 'text-foreground hover:bg-primary/10',
           'flex items-center gap-2 p-2 rounded-md px-3 py-2 transition-all '
         )}>

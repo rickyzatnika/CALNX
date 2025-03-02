@@ -11,11 +11,10 @@ import { DarkmodeToggle } from "../components/DarkmodeToggle";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/auth";
-import { requireUser } from "@/lib/hooks";
-
 import { redirect } from "next/navigation";
 import { Toaster } from "@/components/ui/sonner";
 import prisma from "@/lib/db";
+import { requireUser } from "@/lib/hooks";
 
 
 
@@ -44,12 +43,14 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const session = await requireUser()
   await getData(session.user?.id as string)
 
+
+
   return (
     <>
       <div className="min-h-screen w-full grid md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]" >
-        <div className="hidden md:block border-r-2 border-accent bg-muted/40 ">
+        <div className="hidden md:block border-r border-accent bg-muted/40 ">
           <div className="flex h-full max-h-screen flex-col gap-2 ">
-            <div className="flex h-14 items-center border-b-2 border-accent px-4  lg:h-[60px] lg:px-6">
+            <div className="flex h-14 items-center justify-between border-b border-accent px-4  lg:h-[60px] lg:px-6">
               <Link href="/">
                 <Image src="/logo2.png" alt="logo" width={50} height={50} priority={true} className="cursor-pointer w-auto h-auto" />
               </Link>
@@ -62,19 +63,22 @@ export default async function DashboardLayout({ children }: { children: React.Re
           </div>
         </div>
         <div className="flex flex-col ">
-          <header className="flex h-14 items-center gap-4 border-b-2 border-accent bg-muted/40  px-4 lg:h-[60px] lg:px-6">
+          <header className="relative flex h-14 items-center gap-4 border-b border-accent bg-muted/40  px-4 lg:h-[60px] lg:px-6">
+            <p className="hidden md:block font-semibold"> {session?.user?.name}</p>
             <Sheet>
               <SheetTrigger asChild >
                 <MenuIcon className="size-8 cursor-pointer block md:hidden" />
               </SheetTrigger>
               <SheetContent side="left" className="flex flex-col px-4 ">
-                <SheetTitle className="border-b border-accent pb-2 py-3 ">MENU</SheetTitle>
+                <SheetTitle className=" border-b border-accent pb-2 py-3 ">
+                  {session?.user?.name}
+                </SheetTitle>
                 <nav className="grid gap-2"><DashboardLinks /></nav>
               </SheetContent>
             </Sheet>
-            <div className="ml-auto flex items-center gap-x-4">
-              <DarkmodeToggle />
+            <div className="ml-auto flex items-center gap-x-4 ">
 
+              <DarkmodeToggle />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button size="icon" variant="secondary" className="rounded-full outline-0 border-accent ring-accent">
