@@ -75,10 +75,10 @@ export function SettingForm({ email, fullName, profileImage }: iAppProps) {
                   setCurrentProfileImage(res[0].ufsUrl)
                   toast.success("Image uploaded successfully")
                 }}
-                onUploadError={() => {
-                  toast.error("something went wrong")
+                onUploadError={(error) => {
+                  console.log("something went wrong", error);
+                  toast.error(error.message);
                 }}
-
                 endpoint="imageUploader"
               />
             )}
