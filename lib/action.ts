@@ -207,6 +207,9 @@ export async function updateAvailability(formData: FormData): Promise<void> {
         id: { in: availabilityData.map((item) => item.id) }
       },
       select: { id: true, isActive: true, fromTime: true, tillTime: true },
+      orderBy: {
+        day: 'asc', // Mengurutkan berdasarkan nama hari (misal: Monday, Tuesday, ...)
+      },
     });
 
     // Filter hanya data yang berubah

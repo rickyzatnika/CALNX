@@ -44,6 +44,8 @@ export default async function AvailabilityPage() {
                 <Switch name={`isActive-${item.id}`} defaultChecked={item.isActive} className="cursor-pointer" />
                 <p>{item.day}</p>
               </div>
+
+              {/* ------FROM TIME SELECT------- */}
               <Select name={`fromTime-${item.id}`} defaultValue={item.fromTime}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="From Time" />
@@ -58,9 +60,7 @@ export default async function AvailabilityPage() {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-
-              {/* ------------- */}
-
+              {/* ------TILL TIME SELECT------- */}
               <Select name={`tillTime-${item.id}`} defaultValue={item.tillTime}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Till Time" />
