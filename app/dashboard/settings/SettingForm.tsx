@@ -78,6 +78,7 @@ export function SettingForm({ email, fullName, profileImage }: iAppProps) {
                 onUploadError={() => {
                   toast.error("something went wrong")
                 }}
+
                 endpoint="imageUploader"
               />
             )}

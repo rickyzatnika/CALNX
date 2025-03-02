@@ -8,7 +8,7 @@ import { onboardingSchemaValidation, settingsSchema } from "./zodSchemas"
 import { redirect } from "next/navigation"
 
 
-export async function OnboardingAction(prevState: any, formData: FormData) {
+export async function OnboardingAction(_: any, formData: FormData) {
 
   const session = await requireUser()
 
@@ -45,29 +45,28 @@ export async function OnboardingAction(prevState: any, formData: FormData) {
 }
 
 
-export async function SettingsAction(prevState: any, formData: FormData) {
+export async function SettingsAction(_: any, formData: FormData) {
+  try {
+    const session = await requireUser();
 
-  const session = await requireUser()
+    const submission = parseWithZod(formData, {
+      schema: settingsSchema,
+    });
 
-  const submission = await parseWithZod(formData, {
-    schema: settingsSchema,
-    async: true
-  })
-
-  if (submission.status !== "success") {
-    return submission.reply();
-  }
-
-  await prisma.user.update({
-    where: {
-      id: session.user?.id
-    },
-    data: {
-      name: submission.value.fullName,
-      image: submission.value.profileImage,
+    if (submission.status !== "success") {
+      return submission.reply();
     }
-  })
 
-  return redirect('/dashboard')
+    await prisma.user.update({
+      where: { id: session.user?.id },
+      data: {
+        name: submission.value.fullName,
+        image: submission.value.profileImage,
+      },
+    });
 
+    return redirect('/dashboard');
+  } catch (error) {
+    console.log("SettingsAction Error:", error);
+  }
 }
