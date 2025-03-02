@@ -110,6 +110,43 @@ export async function SettingsAction(prevState: any, formData: FormData) {
 
 
 
+
+//BEFORE ------
+// export async function updateAvailability(formData: FormData) {
+
+//   const rawData = Object.fromEntries(formData.entries());
+
+//   const availabilityData = Object.keys(rawData)
+//     .filter((key) => key.startsWith("id-"))
+//     .map((key) => {
+//       const id = key.replace("id-", "");
+//       return {
+//         id,
+//         isActive: rawData[`isActive-${id}`] === "on",
+//         fromTime: rawData[`fromTime-${id}`] as string,
+//         tillTime: rawData[`tillTime-${id}`] as string,
+//       };
+//     });
+//   try {
+//     await prisma.$transaction(
+//       availabilityData.map((item) => prisma.availability.update({
+//         where: {
+//           id: item.id
+//         },
+//         data: {
+//           isActive: item.isActive,
+//           fromTime: item.fromTime,
+//           tillTime: item.tillTime
+//         }
+//       }))
+//     );
+//     return revalidatePath('/dashboard/availability')
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+
 export async function updateAvailability(formData: FormData) {
 
   const rawData = Object.fromEntries(formData.entries());
@@ -121,10 +158,11 @@ export async function updateAvailability(formData: FormData) {
       return {
         id,
         isActive: rawData[`isActive-${id}`] === "on",
-        fromTime: rawData[`fromTime-${id}`] as string,
-        tillTime: rawData[`tillTime-${id}`] as string,
+        fromTime: rawData[`fromTime-${id}`]?.toString() || null,
+        tillTime: rawData[`tillTime-${id}`]?.toString() || null,
       };
-    });
+    })
+    .filter((item) => item.fromTime && item.tillTime); // Pastikan tidak ada null values
   try {
     await prisma.$transaction(
       availabilityData.map((item) => prisma.availability.update({
@@ -133,12 +171,12 @@ export async function updateAvailability(formData: FormData) {
         },
         data: {
           isActive: item.isActive,
-          fromTime: item.fromTime,
-          tillTime: item.tillTime
+          fromTime: item.fromTime!,
+          tillTime: item.tillTime!,
         }
       }))
     );
-    revalidatePath('/dashboard/availability')
+    return revalidatePath('/dashboard/availability')
   } catch (error) {
     console.log(error);
   }
