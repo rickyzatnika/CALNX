@@ -27,7 +27,7 @@ export default async function AvailabilityPage() {
   const session = await requireUser();
 
   const data = await getData(session.user?.id as string);
-
+  const dayOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   return (
     <Card>
@@ -37,46 +37,49 @@ export default async function AvailabilityPage() {
       </CardHeader>
       <form action={updateAvailability}>
         <CardContent className="flex flex-col gap-y-4">
-          {data.map((item) => (
-            <div key={item.id} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center gap-4 ">
-              <div className="flex items-center gap-x-3">
-                <input type="hidden" hidden name={`id-${item.id}`} value={item.id} />
-                <Switch name={`isActive-${item.id}`} defaultChecked={item.isActive} className="cursor-pointer" />
-                <p>{item.day}</p>
-              </div>
+          {data
+            .sort((a, b) => dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day)) // 🛠️ Urutkan sesuai urutan hari
+            .map((item) => (
+              <div key={item.id} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center gap-4 ">
+                <div className="flex items-center gap-x-3">
+                  <input type="hidden" hidden name={`id-${item.id}`} value={item.id} />
+                  <Switch name={`isActive-${item.id}`} defaultChecked={item.isActive} className="cursor-pointer" />
+                  <p>{item.day}</p>
+                </div>
 
-              {/* ------FROM TIME SELECT------- */}
-              <Select name={`fromTime-${item.id}`} defaultValue={item.fromTime}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="From Time" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {times.map((time) => (
-                      <SelectItem key={time.id} value={time.time}>
-                        {time.time}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              {/* ------TILL TIME SELECT------- */}
-              <Select name={`tillTime-${item.id}`} defaultValue={item.tillTime}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Till Time" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {times.map((time) => (
-                      <SelectItem key={time.id} value={time.time}>
-                        {time.time}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-          ))}
+                {/* ------FROM TIME SELECT------- */}
+                <Select name={`fromTime-${item.id}`} defaultValue={item.fromTime}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="From Time" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {times.map((time) => (
+                        <SelectItem key={time.id} value={time.time}>
+                          {time.time}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+
+                {/* ------TILL TIME SELECT------- */}
+                <Select name={`tillTime-${item.id}`} defaultValue={item.tillTime}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Till Time" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {times.map((time) => (
+                        <SelectItem key={time.id} value={time.time}>
+                          {time.time}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            ))}
         </CardContent>
         <CardFooter className="w-full">
           <SubmitButton text="Save Changes" className=" mt-5 text-white bg-indigo-400/80 hover:bg-indigo-400 shadow-black/30 hover:shadow-black/50 shadow-md transition-all duration-150 " />

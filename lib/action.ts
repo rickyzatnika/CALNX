@@ -185,7 +185,6 @@ export async function SettingsAction(prevState: any, formData: FormData) {
 
 export async function updateAvailability(formData: FormData): Promise<void> {
 
-  const dayOrder = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   // Konversi FormData ke object
   const rawData = Object.fromEntries(formData.entries());
 
@@ -208,12 +207,9 @@ export async function updateAvailability(formData: FormData): Promise<void> {
       where: {
         id: { in: availabilityData.map((item) => item.id) }
       },
-      select: { id: true, isActive: true, fromTime: true, tillTime: true, day: true },
+      select: { id: true, isActive: true, fromTime: true, tillTime: true },
 
     });
-
-    // Urutkan data lama berdasarkan urutan hari
-    existingData.sort((a, b) => dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day));
 
     // Filter hanya data yang berubah
     const updates = availabilityData
@@ -235,13 +231,10 @@ export async function updateAvailability(formData: FormData): Promise<void> {
         }
       }));
 
-
-
     // Jalankan transaksi jika ada perubahan
     if (updates.length > 0) {
       await prisma.$transaction(updates);
     }
-
     return revalidatePath('/dashboard/availability');
 
   } catch (error) {
