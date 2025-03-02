@@ -3,6 +3,8 @@ import { SettingForm } from "./SettingForm";
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/hooks";
 import prisma from "@/lib/db";
+import { Suspense } from "react";
+import { Loader2 } from "lucide-react";
 
 
 async function getData(id: string) {
@@ -31,7 +33,9 @@ export default async function SettingsPage() {
 
   return (
 
-    <SettingForm email={data.email} fullName={data.name as string} profileImage={data.image as string} />
+    <Suspense fallback={<div className="flex gap-2 items-center"> <Loader2 className="size-8 animate-spin" /> Loading...</div>}>
+      <SettingForm email={data.email} fullName={data.name as string} profileImage={data.image as string} />
+    </Suspense>
 
   )
 }
