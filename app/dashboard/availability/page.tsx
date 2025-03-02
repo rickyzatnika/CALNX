@@ -79,7 +79,7 @@ export default async function AvailabilityPage() {
             ))}
         </CardContent>
         <CardFooter className="w-full">
-          <SubmitButton text="Save Changes" className=" mt-5 text-white bg-indigo-400/80 hover:bg-indigo-400 shadow-black/30 hover:shadow-black/50 shadow-md transition-all duration-150 " />
+          <SubmitButton text="Save Changes" className=" mt-5 shadow-md transition-all duration-150 " />
         </CardFooter>
       </form>
     </Card>
