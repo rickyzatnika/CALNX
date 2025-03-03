@@ -14,3 +14,5 @@ export const nylasConfig = {
     apiKey: process.env.NYLAS_API_KEY!,
     apiUri: process.env.NYLAS_API_URI!,
 }
+
+

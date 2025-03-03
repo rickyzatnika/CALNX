@@ -13,7 +13,8 @@ import { eventTypeSchema } from "@/lib/zodSchemas";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import Link from "next/link";
-import { useActionState, useState } from "react";
+import { useState } from "react";
+import { useFormState } from "react-dom";
 
 
 type VideoCallProvider = "Zoom Meeting" | "Google Meet" | "Microsoft Teams";
@@ -23,7 +24,7 @@ export default function NewEventType() {
   const [activePlatform, setActivePlatform] =
     useState<VideoCallProvider>("Google Meet");
 
-  const [lastResult, action] = useActionState(CreateEventType, undefined)
+  const [lastResult, action] = useFormState(CreateEventType, undefined)
 
   const [form, fields] = useForm({
     lastResult,

@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+
 "use client"
 
 import { SubmitButton } from "@/app/components/SubmitButton"
@@ -12,7 +12,8 @@ import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod"
 import { X } from "lucide-react"
 import Image from "next/image"
-import { useActionState, useState } from "react"
+import { useState } from "react"
+import { useFormState } from "react-dom"
 import { toast } from "sonner"
 
 
@@ -26,7 +27,7 @@ interface iAppProps {
 export function SettingForm({ email, fullName, profileImage }: iAppProps) {
 
 
-  const [lastResult, action] = useActionState(SettingsAction, undefined);
+  const [lastResult, action] = useFormState(SettingsAction, undefined);
   const [currentProfileImage, setCurrentProfileImage] = useState(profileImage)
   const [form, fields] = useForm({
     lastResult,
@@ -72,12 +73,12 @@ export function SettingForm({ email, fullName, profileImage }: iAppProps) {
             ) : (
               <UploadDropzone
                 onClientUploadComplete={(res) => {
-                  setCurrentProfileImage(res[0].ufsUrl)
-                  toast.success("Image uploaded successfully")
+                  setCurrentProfileImage(res[0].ufsUrl);
+                  toast.success("Profile Image has been uploaded");
                 }}
                 onUploadError={(error) => {
-                  console.log("something went wrong", error);
-                  toast.error(error.message);
+                  console.log(error);
+                  toast.error("Something went wrong");
                 }}
                 endpoint="imageUploader"
               />

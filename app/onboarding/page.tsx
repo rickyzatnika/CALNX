@@ -7,13 +7,13 @@ import { useForm } from "@conform-to/react"
 import { parseWithZod } from "@conform-to/zod";
 import { onboardingSchema } from "@/lib/zodSchemas";
 import { SubmitButton } from "../components/SubmitButton";
-import { useActionState } from "react";
+import { useFormState } from "react-dom";
 
 
 
 export default function OnboardingRoute() {
 
-  const [lastResult, action] = useActionState(OnboardingAction, undefined)
+  const [lastResult, action] = useFormState(OnboardingAction, undefined)
   const [form, fields] = useForm({
     lastResult,
     onValidate({ formData }) {

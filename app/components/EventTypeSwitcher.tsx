@@ -1,9 +1,10 @@
 "use client";
 
 import { Switch } from "@/components/ui/switch";
-import { useActionState, useEffect, useTransition } from "react";
+import { useEffect, useTransition } from "react";
 import { toast } from "sonner";
 import { UpdateEventTypeStatusAction } from "@/lib/action";
+import { useFormState } from "react-dom";
 
 export function MenuActiveSwitch({
     initalChecked,
@@ -13,7 +14,7 @@ export function MenuActiveSwitch({
     eventTypeId: string;
 }) {
     const [isPending, startTransition] = useTransition();
-    const [state, action] = useActionState(UpdateEventTypeStatusAction, undefined);
+    const [state, action] = useFormState(UpdateEventTypeStatusAction, undefined);
 
     useEffect(() => {
         if (state?.status === "success") {

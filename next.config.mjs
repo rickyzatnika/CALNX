@@ -1,8 +1,5 @@
-import type { NextConfig } from "next";
-
-
-const nextConfig: NextConfig = {
-  /* config options here */
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -17,9 +14,8 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'saobezdqxe.ufs.sh',
       },
-
     ],
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig
