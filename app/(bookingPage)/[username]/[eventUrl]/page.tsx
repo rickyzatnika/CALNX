@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { CreateMeetingAction } from "@/lib/action";
 import { Separator } from "@/components/ui/separator";
 import prisma from "@/lib/db";
-import { Calendar, CalendarX2, Clock, VideoIcon } from "lucide-react";
+import { CalendarX2, Clock, VideoIcon } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -153,27 +153,40 @@ export default async function BookingFormRoute({
       ) : (
         <Card className="max-w-[1000px] w-full mx-auto">
           <CardContent className="p-5 md:grid md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-4">
-            <div className="mb-10 md:mb-0">
+            <div>
               <Image src={data.User?.image ?? "/person.jpg"} alt="profile-image" width={75} height={50} priority={true} className="object-cover rounded-full w-14 h-14" />
-              <p className="text-sm font-medium text-muted-foreground mt-1">{data.User?.name}</p>
+              <p className="text-sm font-medium text-muted-foreground mt-1">
+                {data.User?.name}
+              </p>
               <h1 className="text-xl font-semibold mt-2">{data.title}</h1>
-              <p className="text-sm font-medium text-muted-foreground">{data.description}</p>
+              <p className="text-sm font-medium text-muted-foreground">
+                {data.description}
+              </p>
 
               <div className="mt-5 flex flex-col gap-y-3">
                 <p className="flex items-center">
-                  <Calendar className="size-4 mr-2 text-primary" />
-                  <span className="text-sm font-medium text-muted-foreground">12 AUG 2025</span>
+                  <CalendarX2 className="size-4 mr-2 text-primary" />
+                  <span className="text-sm font-medium text-muted-foreground">
+                    {formattedDate}
+                  </span>
                 </p>
+
                 <p className="flex items-center">
                   <Clock className="size-4 mr-2 text-primary" />
-                  <span className="text-sm font-medium text-muted-foreground">{data.duration} minutes</span>
+                  <span className="text-sm font-medium text-muted-foreground">
+                    {data.duration} Minutes
+                  </span>
                 </p>
+
                 <p className="flex items-center">
                   <VideoIcon className="size-4 mr-2 text-primary" />
-                  <span className="text-sm font-medium text-muted-foreground">{data.videoCallSoftware} </span>
+                  <span className="text-sm font-medium text-muted-foreground">
+                    {data.videoCallSoftware}
+                  </span>
                 </p>
               </div>
             </div>
+
             {/* -----------------------SEPARATOR--------------------------------- */}
             <Separator orientation="vertical" className="w-[2px] hidden md:block h-full" />
             <Separator className="w-full block md:hidden h-1 my-3" />
