@@ -85,7 +85,7 @@ export async function OnboardingAction(prevState: any, formData: FormData) {
       }
     },
   });
-  redirect('/onboarding/grant-id');
+  return redirect('/onboarding/grant-id');
 }
 
 
@@ -110,7 +110,7 @@ export async function SettingsAction(prevState: any, formData: FormData) {
         image: submission.value.profileImage,
       },
     });
-    redirect('/dashboard');
+    return redirect('/dashboard');
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);
@@ -247,7 +247,7 @@ export async function CreateEventType(prevState: any, formData: FormData) {
         userId: session.user?.id
       },
     });
-    redirect('/dashboard');
+    return redirect('/dashboard');
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);
@@ -361,7 +361,7 @@ export async function CreateMeetingAction(formData: FormData) {
         notifyParticipants: true,
       },
     });
-    redirect("/success");
+    return redirect("/success");
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);
@@ -436,7 +436,7 @@ export async function EditEventTypeAction(prevState: any, formData: FormData) {
       },
     });
 
-    redirect("/dashboard");
+    return redirect("/dashboard");
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);
@@ -458,7 +458,7 @@ export async function DeleteEventTypeAction(formData: FormData) {
       },
     });
 
-    redirect("/dashboard");
+    return redirect("/dashboard");
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);
