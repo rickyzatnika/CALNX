@@ -1,8 +1,8 @@
 import { signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog";
-import Image from "next/image";
 import { GithubButton, GoogleButton } from "./SubmitButton";
+import LogoDisplay from "./LogoDisplay";
 
 export function AuthModal() {
   return (
@@ -13,7 +13,7 @@ export function AuthModal() {
       <DialogContent aria-describedby="modal-content" className="sm:max-w-[360px]">
         <DialogTitle >Sign In</DialogTitle>
         <DialogHeader className="w-fit mx-auto">
-          <Image src="/logo2.png" alt="logo" width={75} height={50} priority={true} className="w-auto h-auto" />
+          <LogoDisplay />
         </DialogHeader>
         <div className="flex gap-3 flex-col mt-5">
 
@@ -24,8 +24,6 @@ export function AuthModal() {
           }}>
             <GoogleButton />
           </form>
-
-
 
           {/*--------- GITHUB --------*/}
           <form action={async () => {

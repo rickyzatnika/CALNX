@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import VideoGif from '@/public/work-is-almost-over-happy.gif'
+import VideoGif from '@/public/download.gif'
 import { CalendarCheck2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,7 +19,6 @@ export default function OnboardingRouteTwo() {
             <Link href="/api/auth"> <CalendarCheck2 className="size-5" /> Connect Calendar to your account</Link>
           </Button>
         </CardContent>
-
       </Card>
     </div>
   )

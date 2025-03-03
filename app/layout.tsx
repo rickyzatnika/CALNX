@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/Providers";
+import { ThemeProvider } from "@/app/components/Providers";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system">
+          defaultTheme="dark">
           <NextSSRPlugin
             routerConfig={extractRouterConfig(ourFileRouter)}
           />
