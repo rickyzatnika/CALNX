@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Inter } from 'next/font/google'
 import "./globals.css";
 import { ThemeProvider } from "@/app/components/Providers";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
@@ -7,12 +7,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 
 
-const poppinsSans = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["100", "300", "400", "700"],
-});
-
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={` ${poppinsSans.variable} antialiased `}
+        className={` ${inter.className} antialiased `}
       >
         <ThemeProvider
           attribute="class"
