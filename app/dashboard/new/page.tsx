@@ -129,7 +129,7 @@ export default function NewEventType() {
               <Button className="w-full " variant="secondary" asChild>
                 <Link href="/dashboard">Cancel</Link>
               </Button>
-              <SubmitButton className="w-full bg-indigo-500/80 hover:bg-indigo-500 text-white/90 hover:text-white" text="Create Event Type" />
+              <SubmitButton className="w-full" text="Create Event Type" />
             </CardFooter>
           </CardContent>
         </form>

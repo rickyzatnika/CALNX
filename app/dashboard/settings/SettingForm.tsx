@@ -77,8 +77,8 @@ export function SettingForm({ email, fullName, profileImage }: iAppProps) {
                   toast.success("Profile Image has been uploaded");
                 }}
                 onUploadError={(error) => {
-                  console.log(error);
-                  toast.error("Something went wrong");
+                  console.log("Error: ", error);
+                  toast.error(error.message as string);
                 }}
                 endpoint="imageUploader"
               />

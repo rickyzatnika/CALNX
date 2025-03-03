@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={` ${inter.className} antialiased `}
+        className={`${inter.className} antialiased `}
       >
         <ThemeProvider
           attribute="class"

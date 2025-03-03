@@ -1,9 +1,6 @@
 import { nylas, nylasConfig } from "@/lib/nylas";
 import { redirect } from "next/navigation";
 
-
-
-
 export async function GET() {
 
   const authUrl = nylas.auth.urlForOAuth2({
