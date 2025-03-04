@@ -74,22 +74,24 @@ export default async function BookingFormRoute({
 
 
   return (
-    <div className="min-h-screen w-screen flex items-center justify-center">
+    <div className="min-h-screen w-screen flex items-center justify-center p-8 md:p-2">
       {showForm ? (
-        <Card className="max-w-[600px] w-full">
+        <Card className=" w-full max-w-[600px]">
           <CardContent className="p-5 md:grid md:grid-cols-[1fr,auto,1fr] gap-4">
             <div>
-              <Image
-                src={data.User?.image ?? "/person.jpg"}
-                alt="Profile Image of user"
-                className="w-14 h-14 rounded-full"
-                width={14}
-                height={14}
-                priority={true}
-              />
-              <p className="text-sm font-medium text-muted-foreground mt-1">
-                {data.User?.name}
-              </p>
+              <div className="flex gap-1 items-center">
+                <Image
+                  src={data.User?.image ?? "/person.jpg"}
+                  alt="Profile Image of user"
+                  className="w-14 h-14 rounded-full"
+                  width={14}
+                  height={14}
+                  priority={true}
+                />
+                <p className="text-sm font-medium text-muted-foreground mt-1">
+                  {data.User?.name}
+                </p>
+              </div>
               <h1 className="text-xl font-semibold mt-2">{data.title}</h1>
               <p className="text-sm font-medium text-muted-foreground">
                 {data.description}
@@ -119,7 +121,10 @@ export default async function BookingFormRoute({
               </div>
             </div>
 
-            <Separator orientation="vertical" className="h-full w-[1px]" />
+            {/* -----------------------SEPARATOR--------------------------------- */}
+            <Separator orientation="vertical" className="w-[2px] bg-foreground/40  hidden md:block h-full" />
+            <Separator className="w-full bg-foreground/40 block md:hidden h-1 my-8" />
+            {/* -----------------------SEPARATOR--------------------------------- */}
 
             <form
               className="flex flex-col gap-y-4"
@@ -154,10 +159,12 @@ export default async function BookingFormRoute({
         <Card className="max-w-[1000px] w-full mx-auto">
           <CardContent className="p-5 md:grid md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-4">
             <div>
-              <Image src={data.User?.image ?? "/person.jpg"} alt="profile-image" width={75} height={50} priority={true} className="object-cover rounded-full w-14 h-14" />
-              <p className="text-sm font-medium text-muted-foreground mt-1">
-                {data.User?.name}
-              </p>
+              <div className="flex gap-1 items-center">
+                <Image src={data.User?.image ?? "/person.jpg"} alt="profile-image" width={75} height={50} priority={true} className="object-cover rounded-full w-14 h-14" />
+                <p className="text-md font-medium text-muted-foreground mt-1">
+                  {data.User?.name}
+                </p>
+              </div>
               <h1 className="text-xl font-semibold mt-2">{data.title}</h1>
               <p className="text-sm font-medium text-muted-foreground">
                 {data.description}
@@ -188,14 +195,14 @@ export default async function BookingFormRoute({
             </div>
 
             {/* -----------------------SEPARATOR--------------------------------- */}
-            <Separator orientation="vertical" className="w-[2px] hidden md:block h-full" />
-            <Separator className="w-full block md:hidden h-1 my-3" />
+            <Separator orientation="vertical" className="w-[2px] bg-foreground/40  hidden md:block h-full" />
+            <Separator className="w-full bg-foreground/40  block md:hidden h-1 my-3" />
             {/* -----------------------SEPARATOR--------------------------------- */}
             <RenderCalendar availability={data.User?.availability as { day: string; isActive: boolean }[]} />
 
             {/* -----------------------SEPARATOR--------------------------------- */}
-            <Separator orientation="vertical" className="w-[2px] hidden md:block h-full" />
-            <Separator className="w-full block md:hidden h-1 my-3" />
+            <Separator orientation="vertical" className="w-[2px] bg-foreground/40  hidden md:block h-full" />
+            <Separator className="w-full bg-foreground/40  block md:hidden h-1 my-3" />
             {/* -----------------------SEPARATOR--------------------------------- */}
 
             <TimeTable

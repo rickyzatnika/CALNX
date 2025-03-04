@@ -28,7 +28,7 @@ export function Calendar(
     state
   );
   return (
-    <div {...calendarProps} className="inline-block">
+    <div {...calendarProps} className="inline-block w-full">
       <CalendarHeader
         state={state}
         calendarProps={calendarProps}
