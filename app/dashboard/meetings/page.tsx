@@ -54,7 +54,7 @@ export default async function MeetingsRoute() {
           title="No meetings found"
           description="You dont have any meetings yet."
           buttonText="Create a new event type"
-          href="/dashboard/new"
+          href="/dashboard/create"
         />
       ) : (
         <Card>

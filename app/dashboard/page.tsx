@@ -49,7 +49,7 @@ export default async function Dashboard() {
           title='You don&apos;t have any Event Types'
           description='You can create your first event type by the clicking button bellow'
           buttonText='Add Event Type'
-          href='/dashboard/new'
+          href='/dashboard/create'
         />
       ) : (
         <>
@@ -63,7 +63,7 @@ export default async function Dashboard() {
               </p>
             </div>
             <Button asChild>
-              <Link href="/dashboard/new">Create New Event</Link>
+              <Link href="/dashboard/create">Create New Event</Link>
             </Button>
           </div>
 

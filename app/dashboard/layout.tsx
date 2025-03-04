@@ -5,8 +5,6 @@ import React from "react";
 import { DashboardLinks } from "../components/DashboardLinks";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { LogOut, MenuIcon } from "lucide-react";
-
-
 import { DarkmodeToggle } from "../components/DarkmodeToggle";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -15,9 +13,8 @@ import { redirect } from "next/navigation";
 import { Toaster } from "@/components/ui/sonner";
 import prisma from "@/lib/db";
 import { requireUser } from "@/lib/hooks";
-import { PathnameDisplay } from "../components/PathnameDisplay";
 import LogoDisplay from "../components/LogoDisplay";
-
+import { PathnameDisplay } from "../components/PathnameDisplay";
 
 
 async function getData(userId: string) {

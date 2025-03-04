@@ -1,4 +1,4 @@
-import { CloudRain } from "lucide-react";
+import { CloudRain, FastForwardIcon, ShieldCheck, ThumbsUp } from "lucide-react";
 
 const features = [
   {
@@ -11,19 +11,19 @@ const features = [
     name: "Blazing fast",
     description:
       "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.",
-    icon: CloudRain,
+    icon: FastForwardIcon,
   },
   {
     name: "Super secure with nylas",
     description:
       "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.",
-    icon: CloudRain,
+    icon: ShieldCheck,
   },
   {
     name: "Easy to use",
     description:
       "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.",
-    icon: CloudRain,
+    icon: ThumbsUp,
   },
 ];
 
