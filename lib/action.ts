@@ -93,31 +93,23 @@ export async function SettingsAction(prevState: any, formData: FormData) {
 
   const session = await requireUser()
 
-  try {
-    const submission = parseWithZod(formData, {
-      schema: settingsSchema,
-    });
+  const submission = parseWithZod(formData, {
+    schema: settingsSchema,
+  });
 
-    if (submission.status !== "success") {
-      return submission.reply();
-    }
-    await prisma.user.update({
-      where: {
-        id: session.user?.id
-      },
-      data: {
-        name: submission.value.fullName,
-        image: submission.value.profileImage,
-      },
-    });
-    return redirect('/dashboard');
-  } catch (error) {
-    if (error instanceof Error) {
-      console.log(error.message);
-    } else {
-      console.log(String(error));
-    }
+  if (submission.status !== "success") {
+    return submission.reply();
   }
+  await prisma.user.update({
+    where: {
+      id: session.user?.id
+    },
+    data: {
+      name: submission.value.fullName,
+      image: submission.value.profileImage,
+    },
+  });
+  return redirect('/dashboard');
 }
 
 export async function updateAvailability(formData: FormData) {
@@ -136,27 +128,20 @@ export async function updateAvailability(formData: FormData) {
       };
     })
     .filter((item) => item.fromTime && item.tillTime); // Pastikan tidak ada null values
-  try {
-    await prisma.$transaction(
-      availabilityData.map((item) => prisma.availability.update({
-        where: {
-          id: item.id
-        },
-        data: {
-          isActive: item.isActive,
-          fromTime: item.fromTime!,
-          tillTime: item.tillTime!,
-        }
-      }))
-    );
-    revalidatePath('/dashboard/availability')
-  } catch (error) {
-    if (error instanceof Error) {
-      console.log(error.message);
-    } else {
-      console.log(String(error));
-    }
-  }
+
+  await prisma.$transaction(
+    availabilityData.map((item) => prisma.availability.update({
+      where: {
+        id: item.id
+      },
+      data: {
+        isActive: item.isActive,
+        fromTime: item.fromTime!,
+        tillTime: item.tillTime!,
+      }
+    }))
+  );
+  return revalidatePath('/dashboard/availability');
 }
 
 
@@ -247,7 +232,7 @@ export async function CreateEventType(prevState: any, formData: FormData) {
     },
   });
   return redirect('/dashboard');
-}
+};
 
 
 
@@ -261,37 +246,24 @@ export async function UpdateEventTypeStatusAction(
     isChecked: boolean;
   }
 ) {
-  try {
-    const session = await requireUser();
+  const session = await requireUser();
 
-    await prisma.eventType.update({
-      where: {
-        id: eventTypeId,
-        userId: session.user?.id as string,
-      },
-      data: {
-        active: isChecked,
-      },
-    });
+  await prisma.eventType.update({
+    where: {
+      id: eventTypeId,
+      userId: session.user?.id as string,
+    },
+    data: {
+      active: isChecked,
+    },
+  });
 
-    revalidatePath(`/dashboard`);
-    return {
-      status: "success",
-      message: "EventType Status updated successfully",
-    };
-
-  } catch (error) {
-    if (error instanceof Error) {
-      console.log(error.message);
-    } else {
-      console.log(String(error));
-    }
-    return {
-      status: "error",
-      message: "Something went wrong",
-    };
-  }
-}
+  revalidatePath(`/dashboard`);
+  return {
+    status: "success",
+    message: "EventType Status updated successfully",
+  };
+};
 
 
 export async function CreateMeetingAction(formData: FormData) {
@@ -307,7 +279,7 @@ export async function CreateMeetingAction(formData: FormData) {
 
   if (!getUserData) {
     throw new Error("User not Found");
-  }
+  };
 
   const eventTypeData = await prisma.eventType.findUnique({
     where: {
@@ -353,7 +325,7 @@ export async function CreateMeetingAction(formData: FormData) {
     },
   });
   return redirect("/success");
-}
+};
 
 
 
@@ -372,7 +344,7 @@ export async function cancelMeetingAction(formData: FormData) {
 
   if (!userData) {
     throw new Error("User not found");
-  }
+  };
 
   const data = await nylas.events.destroy({
     eventId: formData.get("eventId") as string,
@@ -384,7 +356,7 @@ export async function cancelMeetingAction(formData: FormData) {
 
   return revalidatePath("/dashboard/meetings");
 
-}
+};
 
 export async function EditEventTypeAction(prevState: any, formData: FormData) {
   const session = await requireUser();
@@ -395,7 +367,7 @@ export async function EditEventTypeAction(prevState: any, formData: FormData) {
 
   if (submission.status !== "success") {
     return submission.reply();
-  }
+  };
 
   const data = await prisma.eventType.update({
     where: {
@@ -412,7 +384,7 @@ export async function EditEventTypeAction(prevState: any, formData: FormData) {
   });
 
   return redirect("/dashboard");
-}
+};
 
 
 export async function DeleteEventTypeAction(formData: FormData) {
@@ -426,4 +398,4 @@ export async function DeleteEventTypeAction(formData: FormData) {
   });
 
   return redirect("/dashboard");
-}
+};

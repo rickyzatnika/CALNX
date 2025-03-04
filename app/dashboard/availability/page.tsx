@@ -1,12 +1,8 @@
-import { SubmitButton } from "@/app/components/SubmitButton";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { updateAvailability } from "@/lib/action";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { requireUser } from "@/lib/hooks";
-import { times } from "@/lib/time";
 import { notFound } from "next/navigation";
 import prisma from "@/lib/db";
+import { AvailabilityForm } from "./AvailabilityForm";
 
 
 async function getData(userId: string) {
@@ -34,52 +30,7 @@ export default async function AvailabilityPage() {
         <CardTitle>Availability</CardTitle>
         <CardDescription>Manage your availability</CardDescription>
       </CardHeader>
-      <form action={updateAvailability}>
-        <CardContent className="flex flex-col gap-y-4">
-          {data.map((item) => (
-            <div key={item.id} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center gap-4 ">
-              <div className="flex items-center gap-x-3">
-                <input type="hidden" hidden name={`id-${item.id}`} value={item.id} />
-                <Switch name={`isActive-${item.id}`} defaultChecked={item.isActive} className="cursor-pointer" />
-                <p>{item.day}</p>
-              </div>
-              {/* ------FROM TIME SELECT------- */}
-              <Select name={`fromTime-${item.id}`} defaultValue={item.fromTime}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="From Time" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {times.map((time) => (
-                      <SelectItem key={time.id} value={time.time}>
-                        {time.time}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              {/* ------TILL TIME SELECT------- */}
-              <Select name={`tillTime-${item.id}`} defaultValue={item.tillTime}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Till Time" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {times.map((time) => (
-                      <SelectItem key={time.id} value={time.time}>
-                        {time.time}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-          ))}
-        </CardContent>
-        <CardFooter className="w-full">
-          <SubmitButton text="Save Changes" className=" mt-5 shadow-md transition-all duration-150 " />
-        </CardFooter>
-      </form>
+      <AvailabilityForm data={data} />
     </Card>
   )
 }
